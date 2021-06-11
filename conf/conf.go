@@ -16,28 +16,27 @@ var (
 	DbName 		string
 )
 
-// SetUp 初始化设置
-func SetUp() {
-	file, err := ini.Load("./conf.ini")
+func init() {
+	cfg, err := ini.Load("./conf/conf.ini")
 	if err != nil {
 		fmt.Println("读取配置文件出错，请检查！")
 	}
-	loadServer(file)
-	loadDatabase(file)
+	loadServer(cfg)
+	loadDatabase(cfg)
 }
 
 // 加载服务器配置
-func loadServer(file *ini.File) {
-	RunMode  = file.Section("server").Key("RunMode").MustString("debug")
-	HttpPort = file.Section("server").Key("HttpPort").MustString(":8555")
+func loadServer(cfg *ini.File) {
+	RunMode  = cfg.Section("server").Key("RunMode").String()
+	HttpPort = cfg.Section("server").Key("HttpPort").String()
 }
 
 // 加载数据库配置
-func loadDatabase(file *ini.File) {
-	Db			= file.Section("database").Key("Db").MustString("mysql")
-	DbHost		= file.Section("database").Key("DbHost").MustString("127.0.0.1")
-	DbPort		= file.Section("database").Key("DbPort").MustString("3306")
-	DbUser		= file.Section("database").Key("DbUser").MustString("root")
-	DbPassword	= file.Section("database").Key("DbPassword").MustString("123456")
-	DbName 		= file.Section("database").Key("DbName").MustString("WenGu")
+func loadDatabase(cfg *ini.File) {
+	Db			= cfg.Section("database").Key("Db").String()
+	DbHost		= cfg.Section("database").Key("DbHost").String()
+	DbPort		= cfg.Section("database").Key("DbPort").String()
+	DbUser		= cfg.Section("database").Key("DbUser").String()
+	DbPassword	= cfg.Section("database").Key("DbPassword").String()
+	DbName 		= cfg.Section("database").Key("DbName").String()
 }

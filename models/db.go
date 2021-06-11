@@ -10,6 +10,7 @@ import (
 )
 
 var (
+	// DB 用于SQL操作
 	DB *gorm.DB
 	err error
 )
